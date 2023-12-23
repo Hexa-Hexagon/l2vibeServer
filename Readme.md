@@ -12,7 +12,8 @@ chmod +x backup.sh
 
 # Install docker
 ```bash
-sudo apt install docker
+curl -fsSL https://get.docker.com -o get-docker.sh
+sudo sh ./get-docker.sh --dry-run
 ```
 
 # Create docker container
@@ -22,7 +23,7 @@ sudo docker-compose create
 
 # Start containers
 ```bash
-sudo docker start l2vibe_mongo_service l2vibe_service
+sudo docker start mongo_service http_service
 ```
 
 # Install nginx
