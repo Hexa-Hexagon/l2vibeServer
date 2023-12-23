@@ -1,0 +1,1 @@
+0 3 * * * root docker exec l2vibe_mongo_service /backup.sh

@@ -1,0 +1,39 @@
+version: "3.9"
+
+services:
+  http_service:
+    container_name: http_service
+    build: 
+      context: ./
+      dockerfile: Dockerfile
+    env_file: .env
+    ports: 
+      - ${PORT}:${PORT}
+    environment:
+      - PORT=${PORT}
+      - PUBLIC_JWT_KEY=${PUBLIC_JWT_KEY}
+      - SECRET_JWT_KEY=${SECRET_JWT_KEY}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
+      - DB_PORT=${DB_PORT}
+    restart: always
+    networks:
+      - app-network
+
+  mongo_service:
+    container_name: mongo_service
+    image: mongo
+    ports:
+      - ${DB_PORT}:${DB_PORT}
+    env_file: .env
+    volumes:
+      - /backup/l2vibe_mongo_db:/data/db
+      - ./backup.sh:/backup.sh
+    restart: always
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

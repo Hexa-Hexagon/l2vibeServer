@@ -1,0 +1,9 @@
+node_modules/
+.vscode/
+.idea/
+.gitignore
+.git/
+.env
+jwt.key
+jwt.key.pub
+create_jwt_key.sh
