@@ -8,7 +8,8 @@ const router = express.Router();
 
 router.use('/images', express.static('images'));
 router.get('/', banner.getBanners);
-router.post('/', authenticate, multer.single('avatar'), banner.createBanner);
+router.post('/', authenticate,  multer.single('avatar'), banner.createBanner);
+router.patch('/:id', authenticate, multer.single('avatar'), banner.patchBanner);
 router.delete('/:id', authenticate, banner.deleteBanner);
 
 

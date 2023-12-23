@@ -1,5 +1,4 @@
 const { server } = require('../models/');
-const { sendError } = require('../middlewares/send_error');
 const { filter } = require('../middlewares/filter');
 
 

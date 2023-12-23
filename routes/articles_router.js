@@ -7,6 +7,7 @@ const router = express.Router();
 
 router.use('/html', express.static('html'));
 router.get('/', article.getArticles);
+router.get('/:id', article.getArticle);
 router.post('/', authenticate,  article.createArticle);
 router.patch('/:id', authenticate, article.patchArticle);
 router.delete('/:id', authenticate, article.deleteArticle);

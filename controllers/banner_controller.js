@@ -14,16 +14,37 @@ module.exports.getBanners = async(request, response) => {
 module.exports.createBanner = async(request, response) => {
     try {
         if(request.file) {
-            await banner.findOneAndDelete({ bannerFileName: request.file.originalname });
-            const { link } = request.body;
+            const { link, fileName } = request.body;
             const newBanner = await banner.create({
                 bannerLink: link,
-                bannerFileName: request.file.originalname
+                bannerFileName: fileName
             });
             response.status(200).send(newBanner);
         } else {
             response.json('');
         }
+    } catch (error) {
+        response.status(500).send(error);
+    }
+}
+
+module.exports.patchBanner = async(request, response) => {
+    try {
+        if(request.file) {
+            const { params: { id }, body: { link, fileName } } = request;
+            const findBanner = await banner.findById(id);
+            fs.unlinkSync(__dirname + `/../images/${findBanner.bannerFileName}`);
+            const updatedBanner = await banner.findByIdAndUpdate(id, {
+                bannerLink: link,
+                bannerFileName: fileName
+            });
+        if (!updatedBanner) {
+            return response.status(404).send({ error: 'Banner not found' });
+        }
+        response.status(200).send(updatedBanner);
+    } else {
+        response.json('');
+    }
     } catch (error) {
         response.status(500).send(error);
     }

@@ -10,6 +10,11 @@ chmod +x backup.sh
 ./create_jwt_key.sh
 ```
 
+# Create images directory
+```bash
+mkdir images
+```
+
 # Install docker
 ```bash
 curl -fsSL https://get.docker.com -o get-docker.sh
