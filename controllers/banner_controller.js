@@ -28,7 +28,7 @@ module.exports.createBanner = async(request, response) => {
     }
 }
 
-module.exports.patchBanner = async(request, response) => {
+module.exports.putBanner = async(request, response) => {
     try {
         if(request.file) {
             const { params: { id }, body: { link, fileName } } = request;
@@ -43,8 +43,24 @@ module.exports.patchBanner = async(request, response) => {
         }
         response.status(200).send(updatedBanner);
     } else {
-        response.json('');
+        response.status(400).json({ error: 'No file provided' });
     }
+    } catch (error) {
+        console.log(error);
+        response.status(500).send(error);
+    }
+}
+
+module.exports.patchBanner = async(request, response) => {
+    try {
+            const { params: { id }, body: { link } } = request;
+            const updatedBanner = await banner.findByIdAndUpdate(id, {
+                bannerLink: link,
+            });
+        if (!updatedBanner) {
+            return response.status(404).send({ error: 'Banner not found' });
+        }
+        response.status(200).send(updatedBanner);
     } catch (error) {
         response.status(500).send(error);
     }

@@ -4,7 +4,6 @@ const article = require('./articles_router');
 const banner = require('./banner_router');
 const { admin } = require('../controllers/');
 
-
 const router = Router();
 
 router.use('/servers/', server);

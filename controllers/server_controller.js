@@ -17,6 +17,7 @@ module.exports.createServer = async(request, response) => {
         const newServer = await server.create(body);
         response.status(200).send(newServer);
     } catch (error) {
+        console.log(error);
         response.status(500).send(error);
     }
 }
@@ -24,7 +25,7 @@ module.exports.createServer = async(request, response) => {
 module.exports.patchServer = async(request, response) => {
     try {
         const { body, params: { id } } = request;
-        const updatedServer = await server.update(id, body);
+        const updatedServer = await server.findByIdAndUpdate(id, body);
         response.status(200).send(updatedServer);
     } catch (error) {
         response.status(500).send(error);
@@ -34,9 +35,10 @@ module.exports.patchServer = async(request, response) => {
 module.exports.deleteServer = async(request, response) => {
     try {
         const { params: { id } } = request;
-        const deletedServer = await server.delete(id);
+        const deletedServer = await server.findByIdAndDelete(id);
         response.status(200).send(deletedServer);
     } catch (error) {
+        console.log(error);
         response.status(500).send(error);
     }
 }
