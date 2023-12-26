@@ -23,7 +23,7 @@ services:
 
   mongo_service:
     container_name: mongo_service
-    image: mongo
+    image: mongo:4.4
     ports:
       - ${DB_PORT}:${DB_PORT}
     env_file: .env
