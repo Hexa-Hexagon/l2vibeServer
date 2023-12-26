@@ -15,10 +15,10 @@ const verify = (token) => {
         if (error) {
             throw new CustomError(error.name, error.message, 500);
         }
-        if (user.is_admin === undefined) {
+        if (user.admin === undefined) {
             throw new CustomError("Error", "The is_admin field does not exist", 500);
         }
-        return user.is_admin;
+        return user.admin;
     });
 }
 
