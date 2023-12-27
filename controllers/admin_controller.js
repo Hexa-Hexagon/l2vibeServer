@@ -20,8 +20,8 @@ module.exports.login = (request, response) => {
         if (hash !== adminPassword) {
             throw new CustomError("Error", "Password is incorrect", 401);
         }
-        response.status(200).json({ token: sign(response) });
+        response.status(200).send({ token: sign(response) });
     } catch (error) {
-        response.status(error.code).json({ type: error.type, msg: error.message });
+        response.status(error.code).send({ type: error.type, msg: error.message });
     }
 }

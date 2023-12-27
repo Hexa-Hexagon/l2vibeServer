@@ -5,9 +5,9 @@ const fs = require('fs');
 module.exports.getBanners = async(request, response) => {
     try {
         const banners = await banner.find();
-        response.status(200).json(banners);
+        response.status(200).send(banners);
     } catch (error) {
-        response.status(500).json(error);
+        response.status(500).send(error);
     }
 }
 
@@ -19,12 +19,12 @@ module.exports.createBanner = async(request, response) => {
                 bannerLink: link,
                 bannerFileName: fileName
             });
-            response.status(200).json(newBanner);
+            response.status(200).send(newBanner);
         } else {
             response.json('');
         }
     } catch (error) {
-        response.status(500).json(error);
+        response.status(500).send(error);
     }
 }
 
@@ -39,15 +39,15 @@ module.exports.putBanner = async(request, response) => {
                 bannerFileName: fileName
             });
         if (!updatedBanner) {
-            return response.status(404).json({ error: 'Banner not found' });
+            return response.status(404).send({ error: 'Banner not found' });
         }
-        response.status(200).json(updatedBanner);
+        response.status(200).send(updatedBanner);
     } else {
         response.status(400).json({ error: 'No file provided' });
     }
     } catch (error) {
         console.log(error);
-        response.status(500).json(error);
+        response.status(500).send(error);
     }
 }
 
@@ -58,11 +58,11 @@ module.exports.patchBanner = async(request, response) => {
                 bannerLink: link,
             });
         if (!updatedBanner) {
-            return response.status(404).json({ error: 'Banner not found' });
+            return response.status(404).send({ error: 'Banner not found' });
         }
-        response.status(200).json(updatedBanner);
+        response.status(200).send(updatedBanner);
     } catch (error) {
-        response.status(500).json(error);
+        response.status(500).send(error);
     }
 }
 
@@ -71,11 +71,11 @@ module.exports.deleteBanner = async(request, response) => {
         const { params: { id } } = request;
         const deletedBanner = await banner.findByIdAndDelete(id);
         if (!deletedBanner) {
-            return response.status(404).json({ error: 'Banner not found' });
+            return response.status(404).send({ error: 'Banner not found' });
         }
         fs.unlinkSync(__dirname + `/../images/${deletedBanner.bannerFileName}`);
-        response.status(200).json(deletedBanner);
+        response.status(200).send(deletedBanner);
     } catch (error) {
-        response.status(500).json(error);
+        response.status(500).send(error);
     }
 }
