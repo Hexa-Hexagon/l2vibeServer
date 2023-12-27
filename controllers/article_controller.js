@@ -14,7 +14,7 @@ module.exports.getArticle = async(request, response) => {
     try {
         const { params: { id } } = request;
         const getArticle = await article.findById(id);
-        response.status(200).json(getArticle);
+        response.status(200).json([getArticle.articleName, getArticle.articleHtml]);
     } catch (error) {
         response.status(500).json(error);
     }
