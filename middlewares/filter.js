@@ -20,12 +20,12 @@ const filterJustOpened = (array) => {
         }
     );
 
-    const result = [
-        filterStatus(justOpened, 'Super VIP'),
-        filterStatus(justOpened, 'VIP'),
-        filterStatus(justOpened, 'Premium'),
-        filterStatus(justOpened, 'Standart')
-    ];
+    const result = {
+        superVip: filterStatus(justOpened, 'Super VIP'),
+        vip: filterStatus(justOpened, 'VIP'),
+        premium: filterStatus(justOpened, 'Premium'),
+        standart: filterStatus(justOpened, 'Standart')
+    };
 
     return result;
 }
@@ -48,12 +48,12 @@ const filterTimeTested = (array) => {
         }
     );
 
-    const result = [
-        filterStatus(timeTested, 'Super VIP'),
-        filterStatus(timeTested, 'VIP'),
-        filterStatus(timeTested, 'Premium'),
-        filterStatus(timeTested, 'Standart')
-    ];
+    const result = {
+        superVip: filterStatus(timeTested, 'Super VIP'),
+        vip: filterStatus(timeTested, 'VIP'),
+        premium: filterStatus(timeTested, 'Premium'),
+        standart: filterStatus(timeTested, 'Standart')
+    };
 
     return result;
 }
@@ -75,12 +75,12 @@ const filterThisWeek = (array) => {
         }
     );
 
-    const result = [
-        filterStatus(thisWeek, 'Super VIP'),
-        filterStatus(thisWeek, 'VIP'),
-        filterStatus(thisWeek, 'Premium'),
-        filterStatus(thisWeek, 'Standart')
-    ];
+    const result = {
+        superVip: filterStatus(thisWeek, 'Super VIP'),
+        vip: filterStatus(thisWeek, 'VIP'),
+        premium: filterStatus(thisWeek, 'Premium'),
+        standart: filterStatus(thisWeek, 'Standart')
+    };
 
     return result;
 }
@@ -102,12 +102,12 @@ const filterThisMonth = (array) => {
         }
     );
 
-    const result = [
-        filterStatus(filteredServers, 'Super VIP'),
-        filterStatus(filteredServers, 'VIP'),
-        filterStatus(filteredServers, 'Premium'),
-        filterStatus(filteredServers, 'Standart')
-    ];
+    const result = {
+        superVip: filterStatus(filteredServers, 'Super VIP'),
+        vip: filterStatus(filteredServers, 'VIP'),
+        premium: filterStatus(filteredServers, 'Premium'),
+        standart: filterStatus(filteredServers, 'Standart')
+    };
 
     return result;
 };
@@ -126,12 +126,12 @@ const filterStartsLater = (array) => {
         }
     );
 
-    const result = [
-        filterStatus(startsLater, 'Super VIP'),
-        filterStatus(startsLater, 'VIP'),
-        filterStatus(startsLater, 'Premium'),
-        filterStatus(startsLater, 'Standart')
-    ];
+    const result = {
+        superVip: filterStatus(startsLater, 'Super VIP'),
+        vip: filterStatus(startsLater, 'VIP'),
+        premium: filterStatus(startsLater, 'Premium'),
+        standart: filterStatus(startsLater, 'Standart')
+    };
 
     return result;
 };
@@ -151,12 +151,12 @@ const filterBonusStarted = (array) => {
         }
     );
 
-    const result = [
-        filterStatus(bonusStarted, 'Super VIP'),
-        filterStatus(bonusStarted, 'VIP'),
-        filterStatus(bonusStarted, 'Premium'),
-        filterStatus(bonusStarted, 'Standart')
-    ];
+    const result = {
+        superVip: filterStatus(bonusStarted, 'Super VIP'),
+        vip: filterStatus(bonusStarted, 'VIP'),
+        premium: filterStatus(bonusStarted, 'Premium'),
+        standart: filterStatus(bonusStarted, 'Standart')
+    };
 
     return result;
 };
