@@ -1,13 +1,14 @@
-const express = require('express');
 const { article } = require('../controllers');
 const { authenticate } = require('../middlewares/sign_and_verify_jwt');
+const { Router } = require('express');
+const multer = require('../middlewares/multer');
 
 
-const router = express.Router();
+const router = Router();
 
 router.get('/', article.getArticles);
 router.get('/:id', article.getArticle);
-router.post('/', authenticate, article.createArticle);
+router.post('/', authenticate,  multer.single('avatar'), article.createArticle);
 router.patch('/:id', authenticate, article.patchArticle);
 router.delete('/:id', authenticate, article.deleteArticle);
 

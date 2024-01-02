@@ -16,7 +16,7 @@ const verify = (token) => {
             throw new CustomError(error.name, error.message, 500);
         }
         if (user.admin === undefined) {
-            throw new CustomError("Error", "The is_admin field does not exist", 500);
+            throw new CustomError("Error", "The admin field does not exist", 500);
         }
         return user.admin;
     });
@@ -26,7 +26,7 @@ module.exports.sign = (response) => {
     try {
         return jwt.sign({ admin: true }, process.env.SECRET_JWT_KEY, { algorithm: 'RS256', expiresIn: '1h' });
     } catch (error) {
-        response.status(500).send({ type: 'JWT Error', msg: "Sign Error" });
+        response.status(500).json({ type: 'JWT Error', msg: "Sign Error" });
     }
 }
 
@@ -43,6 +43,6 @@ module.exports.authenticate = (request, response, next) => {
         }
         next();
     } catch (error) {
-        response.status(error.code).send({ type: error.type, msg: error.message });
+        response.status(error.code).json({ type: error.type, msg: error.message });
     }
 }
