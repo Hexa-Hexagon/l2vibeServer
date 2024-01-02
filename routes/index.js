@@ -7,7 +7,7 @@ const express = require('express');
 
 const router = express.Router();
 
-router.use('/images', express.static('images'));
+router.use('/images/', express.static('images'));
 router.use('/servers/', server);
 router.use('/banners/', banner);
 router.use('/articles/', article);
