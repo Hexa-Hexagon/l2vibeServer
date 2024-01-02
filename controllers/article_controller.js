@@ -1,12 +1,19 @@
 const { article } = require('../models/');
+const fs = require('fs');
 
 
 module.exports.getArticles = async(request, response) => {
     try {
-        const articles = await article.find().select(['id', 'articleName']);
-        response.status(200).json(articles);
+        const { offset } = request.body;
+        const limit = 9;
+        const count = Math.ceil(await article.countDocuments() / 9);
+        if (offset * limit > count) {
+            throw new Error('Offset is greater than the number of articles');
+        }
+        const articles = await article.find().select(['id', 'articleName', 'articleImage']).skip(offset * limit || 0).limit(limit);
+        response.status(200).json({ count: count, articles: articles });
     } catch (error) {
-        response.status(500).json(error);
+        response.status(500).json({ error: error.message });
     }
 }
 
@@ -22,8 +29,11 @@ module.exports.getArticle = async(request, response) => {
 
 module.exports.createArticle = async(request, response) => {
     try {
-        const { body } = request;
-        const newArticle = await article.create(body);
+        const { articleName, fileName } = request.body;
+        const newArticle = await article.create({
+            articleName: articleName,
+            articleImage: fileName
+        });
         response.status(200).json(newArticle);
     } catch (error) {
         response.status(500).json(error);
@@ -40,10 +50,27 @@ module.exports.patchArticle = async(request, response) => {
     }
 }
 
+module.exports.putArticle = async(request, response) => {
+    try {
+        const { body: { fileName, articleName, articleHtml}, params: { id }} = request;
+        const findArticle = article.findById(id).select(['articleImage']);
+        fs.unlinkSync(__dirname + `/../images/${findArticle.articleImage}`);
+        const updatedArticle = await article.findByIdAndUpdate(id, {
+            articleName: articleName,
+            articleHtml: articleHtml,
+            articleImage: fileName
+        });
+        response.status(200).json(updatedArticle);
+    } catch (error) {
+        response.status(500).json(error);
+    }
+}
+
 module.exports.deleteArticle = async(request, response) => {
     try {
         const { params: { id } } = request;
         const deletedArticle = await article.findByIdAndDelete(id);
+        fs.unlinkSync(__dirname + `/../images/${deletedArticle.articleImage}`);
         response.status(200).json(deletedArticle);
     } catch (error) {
         response.status(500).json(error);

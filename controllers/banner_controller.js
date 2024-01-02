@@ -32,7 +32,7 @@ module.exports.putBanner = async(request, response) => {
     try {
         if(request.file) {
             const { params: { id }, body: { link, fileName } } = request;
-            const findBanner = await banner.findById(id);
+            const findBanner = await banner.findById(id).select('bannerFileName');
             fs.unlinkSync(__dirname + `/../images/${findBanner.bannerFileName}`);
             const updatedBanner = await banner.findByIdAndUpdate(id, {
                 bannerLink: link,

@@ -8,13 +8,14 @@ const filterStatus = (array, status) => {
 
 const filterJustOpened = (array) => {
     const currentDate = new Date();
+    currentDate.setHours(23, 59, 59, 0);
     const yesterday = new Date();
     yesterday.setDate(currentDate.getDate() - 1);
-
+    yesterday.setHours(0, 0, 0, 0);
     const justOpened = array.filter(
         server => {
             const serverDate = new Date(server.dateOfStartingServer).setHours(0, 0, 0, 0);
-            return (serverDate === currentDate.setHours(0, 0, 0, 0) || serverDate === yesterday.setHours(0, 0, 0, 0)) &&
+            return serverDate <= currentDate && serverDate >= yesterday &&
                 server.status !== 'King VIP' &&
                 !server.isAction;
         }
@@ -35,14 +36,14 @@ const filterTimeTested = (array) => {
     const currentDate = new Date();
     const twoDaysAgo = new Date(currentDate);
     twoDaysAgo.setDate(currentDate.getDate() - 2);
-
+    twoDaysAgo.setHours(23, 59, 59, 0);
     const fortyFiveDaysAgo = new Date(currentDate);
     fortyFiveDaysAgo.setDate(currentDate.getDate() - 45);
-
+    fortyFiveDaysAgo.setHours(0, 0, 0, 0)
     const timeTested = array.filter(
         server => {
             const serverDate = new Date(server.dateOfStartingServer).setHours(0, 0, 0, 0);
-            return serverDate > fortyFiveDaysAgo && serverDate <= twoDaysAgo &&
+            return serverDate >= fortyFiveDaysAgo && serverDate <= twoDaysAgo &&
                 server.status !== 'King VIP' &&
                 !server.isAction;
         }
@@ -63,10 +64,10 @@ const filterThisWeek = (array) => {
     const currentDate = new Date();
     const tomorrow = new Date(currentDate);
     tomorrow.setDate(currentDate.getDate() + 1);
-
+    tomorrow.setHours(0, 0, 0, 0);
     const endOfWeek = new Date(currentDate);
     endOfWeek.setDate(currentDate.getDate() + (7 - currentDate.getDay()));
-
+    endOfWeek.setHours(23, 59, 59, 0);
     const thisWeek = array.filter(
         server => {
             const serverDate = new Date(server.dateOfStartingServer).setHours(0, 0, 0, 0);
@@ -90,7 +91,7 @@ const filterThisMonth = (array) => {
     const currentDate = new Date();
     const startOfNextWeek = new Date(currentDate);
     startOfNextWeek.setDate(currentDate.getDate() + (8 - currentDate.getDay())); // Начало следующей недели
-
+    startOfNextWeek.setHours(0, 0, 0, 0);
     const endOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
     endOfMonth.setHours(23, 59, 59, 0); // Конец месяца
 
@@ -139,9 +140,10 @@ const filterStartsLater = (array) => {
 
 const filterBonusStarted = (array) => {
     const currentDate = new Date();
+    currentDate.setHours(23, 59, 59, 0);
     const daysAgo = new Date(currentDate);
     daysAgo.setDate(currentDate.getDate() - 45);
-
+    daysAgo.setHours(0, 0, 0, 0);
     const bonusStarted = array.filter(
         server => {
             const serverDate = new Date(server.dateOfStartingServer).setHours(0, 0, 0, 0);

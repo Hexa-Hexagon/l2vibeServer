@@ -17,23 +17,28 @@ services:
       - DB_PASSWORD=${DB_PASSWORD}
       - DB_NAME=${DB_NAME}
       - DB_PORT=${DB_PORT}
-    restart: always
     networks:
-      - app-network
+      - private_network
+      - public_network
+    restart: always
 
   mongo_service:
     container_name: mongo_service
-    image: mongo:4.4
+    image: mongo:4.4.6
     ports:
-      - ${DB_PORT}:${DB_PORT}
+      - ${DB_PORT}:27017
     env_file: .env
     volumes:
       - /backup/l2vibe_mongo_db:/data/db
       - ./backup.sh:/backup.sh
-    restart: always
     networks:
-      - app-network
+      - private_network
+    restart: always
 
 networks:
-  app-network:
+  public_network:
     driver: bridge
+
+  private_network:
+    driver: bridge
+    internal: true
