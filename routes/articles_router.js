@@ -6,8 +6,8 @@ const multer = require('../middlewares/multer');
 
 const router = Router();
 
-router.get('/', article.getArticles);
-router.get('/:id', article.getArticle);
+router.get('/:offset', article.getArticles);
+router.get('/id/:id', article.getArticle);
 router.post('/', authenticate,  multer.single('avatar'), article.createArticle);
 router.patch('/:id', authenticate, article.patchArticle);
 router.delete('/:id', authenticate, article.deleteArticle);
