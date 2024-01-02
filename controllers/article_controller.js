@@ -53,7 +53,7 @@ module.exports.patchArticle = async(request, response) => {
 module.exports.putArticle = async(request, response) => {
     try {
         const { body: { fileName, articleName, articleHtml}, params: { id }} = request;
-        const findArticle = article.findById(id).select(['articleImage']);
+        const findArticle = article.findById(id);
         fs.unlinkSync(__dirname + `/../images/${findArticle.articleImage}`);
         const updatedArticle = await article.findByIdAndUpdate(id, {
             articleName: articleName,

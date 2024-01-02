@@ -32,7 +32,7 @@ module.exports.putBanner = async(request, response) => {
     try {
         if(request.file) {
             const { params: { id }, body: { link, fileName } } = request;
-            const findBanner = await banner.findById(id).select('bannerFileName');
+            const findBanner = await banner.findById(id);
             fs.unlinkSync(__dirname + `/../images/${findBanner.bannerFileName}`);
             const updatedBanner = await banner.findByIdAndUpdate(id, {
                 bannerLink: link,
@@ -46,7 +46,6 @@ module.exports.putBanner = async(request, response) => {
         response.status(400).json({ error: 'No file provided' });
     }
     } catch (error) {
-        console.log(error);
         response.status(500).json(error);
     }
 }
