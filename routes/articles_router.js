@@ -10,6 +10,7 @@ router.get('/', article.getArticles);
 router.get('/:offset', article.getArticles);
 router.get('/id/:id', article.getArticle);
 router.post('/', authenticate,  multer.single('avatar'), article.createArticle);
+router.post('/image', authenticate, multer.single('avatar'), article.createImage)
 router.patch('/:id', authenticate, article.patchArticle);
 router.put('/:id', authenticate, multer.single('avatar'), article.putArticle);
 router.delete('/:id', authenticate, article.deleteArticle);

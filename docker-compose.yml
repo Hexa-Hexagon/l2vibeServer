@@ -1,8 +1,8 @@
 version: "3.9"
 
 services:
-  http_service:
-    container_name: http_service
+  l2vibe_service:
+    container_name: l2vibe_service
     build: 
       context: ./
       dockerfile: Dockerfile
@@ -18,12 +18,12 @@ services:
       - DB_NAME=${DB_NAME}
       - DB_PORT=${DB_PORT}
     networks:
-      - private_network
       - public_network
+      - private_network
     restart: always
 
-  mongo_service:
-    container_name: mongo_service
+  l2vibe_db:
+    container_name: l2vibe_db
     image: mongo:4.4.6
     ports:
       - ${DB_PORT}:27017

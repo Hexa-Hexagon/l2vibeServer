@@ -4,7 +4,9 @@ RUN mkdir /l2vibeService
 
 WORKDIR /l2vibeService
 
-COPY ./ ./
+COPY . .
+
+RUN npm install
 
 EXPOSE 5000
 

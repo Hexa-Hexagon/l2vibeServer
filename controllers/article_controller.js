@@ -1,5 +1,7 @@
+const { request } = require('http');
 const { article } = require('../models/');
 const fs = require('fs');
+const { response } = require('../app');
 
 
 module.exports.getArticles = async(request, response) => {
@@ -72,6 +74,18 @@ module.exports.deleteArticle = async(request, response) => {
         const deletedArticle = await article.findByIdAndDelete(id);
         fs.unlinkSync(__dirname + `/../images/${deletedArticle.articleImage}`);
         response.status(200).json(deletedArticle);
+    } catch (error) {
+        response.status(500).json(error);
+    }
+}
+
+module.exports.createImage = async(request, response) => {
+    try {
+        if (!request.file) {
+            return response.status(400).json("Please send picture");
+        }
+        const { fileName } = request.body;
+        return response.status(200).json(`api.l2vibe.com/images/${fileName}`);
     } catch (error) {
         response.status(500).json(error);
     }
