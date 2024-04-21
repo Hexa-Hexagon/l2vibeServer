@@ -6,8 +6,6 @@ WORKDIR /l2vibeService
 
 COPY ./ ./
 
-RUN npm i
-
 EXPOSE 5000
 
 CMD [ "npm", "run", "start"]
